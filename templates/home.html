@@ -1,13 +1,21 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<div style="margin-top:80px;">
 
-<div class="home-scrollbar">
-    {% for result in results %}
-    <div class="scrollbar-img">
-        <img src="{{result[1]}}" alt ="An image of {{result[0]}}">
+    <div style="display: flex; justify-content: center;">
+        <h2 style="font-size: var(--font2);"> What's Popular:</h2>
     </div>
-    {% endfor %}
+
+    <div class="home-scrollbar">
+        {% for result in results %}
+        <div class="scrollbar-img">
+            <img src="{{result[1]}}" alt ="An image of {{result[0]}}">
+        <div class="scrollbar-hover">{{result[0]}}</div>
+        </div>
+        {% endfor %}
+    </div>
+
 </div>
 
 {% endblock %}

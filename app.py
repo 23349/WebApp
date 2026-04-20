@@ -30,11 +30,18 @@ def query_db(query, args=(), one=False):
 
 
 @app.route('/')
-def home():
-    # This is my homepage and it will include the id, name, maker and img
+def home(): 
+    # Gets the items for the scrollbar
     sql = """SELECT item.name, item.imgURL FROM item"""
     results = query_db(sql)
     return render_template("home.html", results=results)
+
+@app.route('/login')
+def login():
+    sql = """SELECT * FROM user"""
+    results = query_db(sql)
+    print(results)
+    return render_template("login.html", results=results)
 
 
 if __name__ == "__main__":

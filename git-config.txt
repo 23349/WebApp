@@ -1,9 +1,0 @@
-git config --global user.email "23349@burnside.school.nz"
-git config --global user.name "23349"
-
-
-DEF2C8
-C5DAC1
-BCD0C7
-A9B2AC
-898980
