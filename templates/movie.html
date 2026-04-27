@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="movie-container">
+    <div class="movie-poster">
+        <img src="{{movie[4]}}" alt=" A image of the movie {{movie[1]}}">
+    </div>
+    <div class="movie-details">
+        <h1>{{ movie[1] }}</h1>
+    </div>
+</div>
+
+{% endblock %}

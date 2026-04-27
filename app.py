@@ -57,10 +57,10 @@ def movies():
 
 # Will get the information for the movie that is clicked on and render the page for it    
 @app.route('/movies/<int:id>')
-def cars(id):
+def individual_movie(id):
     sql = """SELECT * FROM item WHERE item.item_id = ?"""
-    result = query_db(sql, (id), True)
-    return render_template("movie.html", movie=result)
+    results = query_db(sql, (id,), True)
+    return render_template("movie.html", movie=results)
 
 
 if __name__ == "__main__":
