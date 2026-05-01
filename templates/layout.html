@@ -11,23 +11,29 @@
 </head>
 <body>
 
-    <div style="position: sticky; top: 0;">
-        <div class="navbar">
-            <div class="navbar-logo">
-                <a href="{{url_for('home')}}">
-                <img style = "padding: 0;" src="{{ url_for('static', filename='images/logo.webp')}}" alt= "Popcorn themed logo">
-                <span>POPCORN</span> </a>
+    <nav class="navbar">
+        <div class="navbar-container">
+
+            <div class="navbar-left">
+                <div class="navbar-logo">
+                    <a href="{{url_for('home')}}">
+                        <img src="{{ url_for('static', filename='images/logo.webp')}}" alt="Popcorn logo">
+                        <span>POPCORN</span>
+                    </a>
+                </div>
+                <a class="navbar-links" href="{{url_for('movies')}}">MOVIES</a>
+                <input type="text" placeholder="Search...">
             </div>
-        
-            <div class="navbar-links">
-                <a href="{{url_for('login')}}">LOGIN/SIGNUP</a>
-                <a href="{{url_for('movies')}}">MOVIES</a>
+
+            <div class="navbar-right">
+                <a class="navbar-links" href="{{url_for('login')}}">LOGIN/SIGNUP</a>
             </div>
+
         </div>
-    </div>
+    </nav>
 
     {% block body %}
-    {% endblock %}.
+    {% endblock %}
     
 </body>
 </html>
