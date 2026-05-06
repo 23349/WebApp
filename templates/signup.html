@@ -2,14 +2,13 @@
 
 {% block body %}
 <div class ="account-container">
-    <span style="font-size: 24px; color: #ffff; font-weight: 600;">LOGIN</span>
-    <form method="POST" action="login">
+    <span style="font-size: 24px; color: #ffff; font-weight: 600;">SIGN UP</span>
+    <form method="POST" action="signup">
         <input type="text" name="username" placeholder="Username" required><br>
         <input type="password" name="password" placeholder="Password" required><br>
+        <input type="password" name="password" placeholder=" Verify Password" required><br>
+        <input type="text" name="email" placeholder="Email"><br>
         <button type="submit">CONTINE</button>
-        <a href="{{url_for('signup')}}">
-            <span class="signup-link">or SIGN UP</span>
-        </a>
     </form>
 </div>
 {% endblock %}

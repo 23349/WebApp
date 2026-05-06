@@ -34,7 +34,16 @@ def query_db(query, args=(), one=False):
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
+# add a decorator
 
+@app.before_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = query_db("SELECT * FROM user WHERE id = ?", [user_id], one=True)
 
 
 
@@ -66,9 +75,17 @@ def login():
     return render_template("login.html")
 
 
+
+# @app.route('/logout')
+# def logout():
+#     session.clear()
+#     return redirect(url_for('login'))
+
+
+
 # Gets the user information for the register page and renders it
-@app.route('/register', methods=['GET', 'POST'])
-def register():
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -79,7 +96,7 @@ def register():
         query_db("INSERT INTO user (username, password) VALUES (?, ?)", [username, hashed_pw])
         return redirect(url_for('login'))
         
-    return render_template("register.html")
+    return render_template("signup.html")
 
 
 

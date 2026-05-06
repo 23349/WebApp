@@ -166,7 +166,7 @@ img{
 
 
 /* Login */
-.login-container {
+.account-container {
     display: block;
     margin: 50px auto;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -179,7 +179,7 @@ img{
     max-width: 400px; 
 }
 
-.login-container input {
+.account-container input {
     display: block;
     width: 100%;
     margin: 15px auto 0;
@@ -192,7 +192,7 @@ img{
     transition: outline 0.3s ease;
 }
 
-.login-container button {
+.account-container button {
     font-size: 16px;
     display: block;
     width: 100%;
@@ -207,7 +207,7 @@ img{
     transition: all 0.3s ease;
 }
 
-.login-container button:hover {
+.account-container button:hover {
     transition: all 0.3s ease;
     color: white;
     background-color: #00a354;
@@ -220,7 +220,6 @@ img{
     color: #ffffff;
     font-size: 16px;
     text-decoration: underline;
-    cursor: pointer;
 }
 
 .signup-link:hover {
