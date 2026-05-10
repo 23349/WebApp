@@ -29,12 +29,14 @@ def close_connection(exception):
 
 
 def query_db(query, args=(), one=False):
+    db = get_db()
     cur = get_db().execute(query, args)
+    db.commit()
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
-# add a decorator
+
 
 @app.before_request
 def load_logged_in_user():
@@ -43,7 +45,7 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = query_db("SELECT * FROM user WHERE id = ?", [user_id], one=True)
+        g.user = query_db("SELECT * FROM user WHERE user_id = ?", [user_id], one=True)
 
 
 
@@ -67,17 +69,16 @@ def login():
         user = query_db(sql, [username], one=True)
 
         if user and check_password_hash(user['password'], password):
-            session['user_id'] = user['id']
+            session['user_id'] = user['user_id']
             return redirect(url_for('home'))
         else:
             flash(" Invalid Username or Password ( O - O ) ", "error")
-            render_template("login.html")
             return render_template("login.html", username=username)
 
     return render_template("login.html")
 
 
-
+# You can leave...if you want to...but i hope you stay ( T - T )
 @app.route('/logout')
 def logout():
     session.clear()
@@ -92,14 +93,14 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         confirm_password = request.form['confirm-password']
+        email = request.form['email']
         
         if password != confirm_password:
             flash("Passwords did not match ( o ⌓ o ) ", "error")
-            render_template("signup.html")
-            return render_template("signup.html", username=username)
+            return render_template("signup.html", username=username, email=email)
         
         hashed_pw = generate_password_hash(password)
-        query_db("INSERT INTO user (username, password) VALUES (?, ?)", [username, hashed_pw])
+        query_db("INSERT INTO user (username, password, email) VALUES (?, ?, ?)", [username, hashed_pw, email])
         return redirect(url_for('login'))
         
     return render_template("signup.html")
