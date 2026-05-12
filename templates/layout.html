@@ -22,7 +22,9 @@
                     </a>
                 </div>
                 <a class="navbar-links" href="{{url_for('movies')}}">MOVIES</a>
-                <input type="text" placeholder="Search...">
+               <form method="get" action="{{ url_for('search') }}">
+                    <input name="searchbar" type="text" placeholder="Search...">
+                </form>
             </div>
 
             <div class="navbar-right">
@@ -37,6 +39,9 @@
     </nav>
 
     {% block body %}
+    {% endblock %}
+
+    {% block scripts %}
     {% endblock %}
     
 </body>

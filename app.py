@@ -124,5 +124,30 @@ def individual_movie(id):
     return render_template("movie.html", movie=results)
 
 
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    query = request.values.get('searchbar', '').strip()
+    if not query:
+        flash("Please enter a search term.", "error")
+        return redirect(url_for('home'))
+
+    sql = """SELECT item.name, item.imgURL, item.item_id FROM item WHERE item.name LIKE ?"""
+    results = query_db(sql, [f"%{query}%"], False)
+
+    if len(results) == 1:
+        return redirect(url_for('individual_movie', id=results[0]['item_id']))
+    if not results:
+        flash(f"No results found for '{query}'", "error")
+    return render_template("movies.html", results=results)
+
+
+@app.route('/review', methods=['GET', 'POST'])
+def review():
+    review = request.values.get('review')
+    query_db("INSERT INTO ratings (review) VALUES (?)", [review])
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
