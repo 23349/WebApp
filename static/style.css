@@ -206,11 +206,10 @@ img{
 }
 
 .signup-link{
-    display: block;
-    margin-top: 15px;
     color: #ffffff;
     font-size: 16px;
     text-decoration: underline;
+    font-weight: 600;
 }
 
 .signup-link:hover {
@@ -258,10 +257,12 @@ img{
 
 .movie-overlay {
     position: absolute;
+    /* Centers text */
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+
     background: rgba(0, 0, 0, 0.6);
     font-weight: 600;
     text-align: center;
@@ -348,4 +349,6 @@ img{
     cursor: pointer;
     border: none;
     padding: 5px;
+    font-weight: 600;
+    letter-spacing: 1px;
 }

@@ -18,9 +18,10 @@
         
     
         <button type="submit">CONTINE</button>
-        <a href="{{url_for('signup')}}">
-            <span class="signup-link">or SIGN UP</span>
-        </a>
+        <div style="display: block; margin-top: 15px; color: #ffff;">
+          <span>or</span>
+          <a class="signup-link" href="{{url_for('signup')}}">SIGN UP</a>
+      </div>
     </form>
 </div>
 {% endblock %}
