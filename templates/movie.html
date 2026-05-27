@@ -17,10 +17,12 @@
 
         <!-- Checks if a user is logged in -->
         {% if g.user %}
+
             <!-- Checks if they have alreafy left a review on this movie-->
-            {% if has_reviewed == true %}
+            {% if user_review  %}
                     <div style="margin-top: 15vh;font-size: 12px; text-align: center;">
-                        <h1> Sorry, but you have already reviewed this movie </h1> 
+                        <h3>Your review:</h3>
+                        <h3>{{user_review['review']}}</h3> 
                     </div>
             {% else %}
 

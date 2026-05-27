@@ -120,28 +120,28 @@ def movies():
 @app.route('/movies/<int:id>')
 def individual_movie(id):
     sql = """SELECT * FROM item WHERE item.item_id = ?"""
-    results = query_db(sql, (id,), one=True)
-    has_reviewed = False
+    result = query_db(sql, (id,), one=True)
 
     # Checks if there even is a movie:
-    if results is None:
-        return ("Movie not found")
+    if result is None:
+        return ("Movie not found 404")
+    
+    #sets the user data to nothing
+    user_review_data = None
 
     # Checks if the user is logged in
-    # If they aren't it wont allow them to leave a review
-    if g.user is None:
-            flash("You must be logged in to review!", "review")
+    if g.user:
+        sql_review = "SELECT * FROM ratings WHERE item_id = ? AND user_id = ?"
+        review_check = query_db(sql_review, (id, g.user['user_id']), one=True)
 
-
-    # If they are, it will chekc if they have already left a review
+        # If they are, it will check if they have already left a review and then display it
+        if review_check:
+            user_review_data = review_check
+    # If they are, it will check if they have already left a review
     else:
-        sql = """SELECT * FROM ratings WHERE item_id = ? AND user_id = ?"""
-        review_check = query_db(sql, (id, g.user['user_id']))
-        # If they have its sets the has_reviewed to True
-        if len(review_check) > 0:
-            has_reviewed = True
+        flash("You must be logged in to review!", "review")
 
-    return render_template("movie.html", movie=results, has_reviewed=has_reviewed)
+    return render_template("movie.html", movie=result, user_review=user_review_data)
 
 
 # Allows the user to search and if a single result is found it will take them directly to that page
