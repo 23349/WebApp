@@ -299,7 +299,7 @@ img{
 
 
 
-/* Movie page */
+/* Movies page */
 .movies-parent {
     margin: 0 50px 50px 50px;
     display: grid; 
@@ -385,15 +385,37 @@ img{
     color: var(--color1);
 }
 
-.mContent form {
+.review-content{
+    margin-top: 5vh; 
+    color: #000000; 
+    font-size: 12px; 
+    text-align: center;
+}
+.review-content form {
     width: 100%;
-    display: inline-block;
+    display: none;
+    flex-direction: column;
     align-items: center;
 }
 
-.mContent textarea {
+.dropdown-btn{
+    border: none;
+    background-color: var(--color2); 
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.dropdown-btn:hover, .dropdown-btn:focus {
+    cursor: pointer;
+    background-color: var(--color4);
+}
+
+.review-content textarea {
     width: 90%;
-    height: 150px;
+    height: 75px;
     margin: 15px 0;
     padding: 12px;
     border: 2px solid #ddd;
@@ -404,7 +426,7 @@ img{
     outline: none;
 }
 
-.mContent textarea:focus {
+.review-content textarea:focus {
     border-color: var(--color2);
 }
 
@@ -433,4 +455,29 @@ img{
     padding: 5px;
     font-weight: 600;
     letter-spacing: 1px;
+}
+
+.star-rating{
+    display: flex; 
+    gap: 10px; 
+    justify-content: center;
+    flex-direction: row-reverse;
+    font-size: calc(1.5vh + 0.9vw);
+}
+
+.star-rating label {
+    color: #c1bfb4;
+    cursor: pointer;
+    transition: color 0.5s;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+/* So basically, first part checks if a star is clicked on, if so it will light up it and the stars taht come before it (swirly -)*/
+/* Next if the user hovers over a star it turns gold*/
+/* Finally all the stars before the one the user is on also turn gold */
+.star-rating input:checked ~ label, .star-rating label:hover, .star-rating label:hover ~ label {
+    color: #ffd041;
 }

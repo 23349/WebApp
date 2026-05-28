@@ -11,7 +11,11 @@
     <div style="display: inline-block;">
         <div>
             <h1>{{movie['name']}}</h1>
-            <h4></h4>
+            {% if movie_rating %}
+                <h4>{{movie_rating}}</h4>
+            {% else %}
+                <h4>UNRATED</h4>
+            {% endif %}
             <h4>{{movie['description']}}</h4>
         </div>
 
@@ -21,20 +25,40 @@
             <!-- Checks if they have alreafy left a review on this movie-->
             {% if user_review  %}
                     <div style="margin-top: 15vh;font-size: 12px; text-align: center;">
+                        <h3>Your rating: {{user_review['rating']}}</h3>
                         <h3>Your review:</h3>
                         <h3>{{user_review['review']}}</h3> 
                     </div>
             {% else %}
 
             <!-- If they haven't then it will let them -->
-            <div style="margin-top: 5vh; color: #000000; font-size: 12px; text-align: center;">
-                <div class="mContent">
-                    <form method="post" action="{{url_for('review')}}">
-                        <input type="hidden" name="movie_id" value="{{movie['item_id']}}">
-                        <textarea name="review" placeholder="Tell us what you think..."></textarea><br>
-                        <button type="submit" class="submit-btn">SUBMIT</button>
-                    </form>
-                </div>
+            <div class="review-content">
+                <button id="dropdown-btn" class="dropdown-btn">REVIEW</button>
+                <form id="reviewDropdown" method="post" action="{{url_for('review')}}">
+                    <input type="hidden" name="movie_id" value="{{movie['item_id']}}">
+                    <div>
+                        <!-- Allow the user to alsp leave a star rating! -->
+                        <div class="star-rating">
+                            <input type="radio" id="5star" name="star" value="5">
+                            <label for="5star" title="5 stars">★</label>
+
+                            <input type="radio" id="4star" name="star" value="4">
+                            <label for="4star" title="4 stars">★</label>
+
+                            <input type="radio" id="3star" name="star" value="3">
+                            <label for="3star" title="3 stars">★</label>
+
+                            <input type="radio" id="2star" name="star" value="2">
+                            <label for="2star" title="2 stars">★</label>
+
+                            <input type="radio" id="1star" name="star" value="1">
+                            <label for="1star" title="1 star">★</label>
+                        </div>
+                    </div>
+
+                    <textarea name="review" placeholder="Tell us what you think..."></textarea><br>
+                    <button type="submit" class="submit-btn">SUBMIT</button>
+                </form>
             </div>
             {% endif %}
         
@@ -49,4 +73,19 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+  var toggleBtn = document.getElementById("dropdown-btn");
+    toggleBtn.addEventListener("click", function() {
+        var form = document.getElementById("reviewDropdown");
+        if (form.style.display === "flex") {
+            form.style.display = "none";
+        } else {
+            form.style.display = "flex";
+        }
+    });
+</script>
+
 {% endblock %}

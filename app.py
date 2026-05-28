@@ -72,7 +72,7 @@ def login():
             session['user'] = user['user_id']
             return redirect(url_for('home'))
         else:
-            flash("Passwords did not match ( o ⌓ o )", "login")
+            flash("Username or password is incorrect ( o ⌓ o )", "login")
             return render_template("login.html", username=username)
 
     return render_template("login.html")
@@ -116,34 +116,6 @@ def movies():
 
 
 
-# Will get the information for the movie that is clicked on and render the page for it:
-@app.route('/movies/<int:id>')
-def individual_movie(id):
-    sql = """SELECT * FROM item WHERE item.item_id = ?"""
-    result = query_db(sql, (id,), one=True)
-
-    # Checks if there even is a movie:
-    if result is None:
-        return ("Movie not found 404")
-    
-    #sets the user data to nothing
-    user_review_data = None
-
-    # Checks if the user is logged in
-    if g.user:
-        sql_review = "SELECT * FROM ratings WHERE item_id = ? AND user_id = ?"
-        review_check = query_db(sql_review, (id, g.user['user_id']), one=True)
-
-        # If they are, it will check if they have already left a review and then display it
-        if review_check:
-            user_review_data = review_check
-    # If they are, it will check if they have already left a review
-    else:
-        flash("You must be logged in to review!", "review")
-
-    return render_template("movie.html", movie=result, user_review=user_review_data)
-
-
 # Allows the user to search and if a single result is found it will take them directly to that page
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -162,6 +134,54 @@ def search():
     return render_template("movies.html", results=results)
 
 
+# Will get the information for the movie that is clicked on and render the page for it:
+@app.route('/movies/<int:id>')
+def individual_movie(id):
+    sql = """SELECT * FROM item WHERE item_id = ?"""
+    result = query_db(sql, (id,), one=True)
+
+    # Checks if there even is a movie:
+    if result is None:
+        return ("Movie not found 404")
+    
+    # Checks if the movie has a review
+    sql = """SELECT AVG(rating) FROM ratings WHERE item_id = ?"""
+    movie_review_check = query_db(sql, (id,), one=True)
+    # if movie_review_check:
+    #     sumx = 0
+    #     numx = 0
+    #     for x in int(movie_review_check):
+    #         sumx += x
+    #         numx += 1
+    #     movie_review_data = sumx/numx
+    # else:
+    #     movie_review_data = None
+    if movie_review_check and movie_review_check[0] is not None:
+        movie_review_data = movie_review_check[0]
+    else:
+        movie_review_data = None
+
+
+    #sets the user data to nothing
+    user_review_data = None
+
+    # Checks if the user is logged in
+    if g.user:
+        sql = "SELECT * FROM ratings WHERE item_id = ? AND user_id = ?"
+
+        # If they are, it will check if they have already left a review and then display it
+        user_review_check = query_db(sql, (id, g.user['user_id']), one=True)
+        if user_review_check:
+            user_review_data = user_review_check
+    # If they are, it will check if they have already left a review
+    else:
+        flash("You must be logged in to review!", "review")
+
+    return render_template("movie.html", movie=result, user_review=user_review_data, movie_rating=movie_review_data)
+
+
+
+
 # Will allow the user to leave a review
 @app.route('/review', methods=['POST'])
 def review():
@@ -169,7 +189,8 @@ def review():
     review_text = request.form.get('review')
 
     if review_text and movie_id:
-        query_db("INSERT INTO ratings (review, user_id, item_id) VALUES (?, ?, ?)", (review_text, g.user['user_id'], movie_id))
+        star_review = request.form.get('star')
+        query_db("INSERT INTO ratings (review, user_id, item_id, rating) VALUES (?, ?, ?, ?)", (review_text, g.user['user_id'], movie_id, star_review))
     
     return redirect(url_for('individual_movie', id=movie_id))
 

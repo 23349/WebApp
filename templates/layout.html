@@ -56,7 +56,7 @@
                     </a>
                 {% else %}
                     <!-- Otherwise a link to the login page is displayed -->
-                    <a class="navbar-links" href="{{ url_for('login') }}">LOGIN/SIGNUP</a>
+                    <a class="navbar-links" href="{{ url_for('login') }}">LOGIN</a>
                 {% endif %}
             </div>
         </div>
@@ -64,6 +64,9 @@
 
     <!-- Spot to inject html for other pages -->
     {% block body %}
+    {% endblock %}
+
+    {% block script %}
     {% endblock %}
     
 </body>
