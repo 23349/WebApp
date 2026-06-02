@@ -67,7 +67,7 @@
             <div style="margin-top: 15vh;font-size: 12px; text-align: center;">
                 <a href="{{ url_for('login') }}">
                     <!-- Redirect button -->
-                    <button class="redirect-btn">PLEASE LOGIN TO REVIEW</button>
+                    <span class="redirect">PLEASE LOGIN TO REVIEW</span>
                 </a>
             </div>
         {% endif %}
@@ -78,8 +78,9 @@
 {% block script %}
 <script>
   var toggleBtn = document.getElementById("dropdown-btn");
+  var form = document.getElementById("reviewDropdown");
+  
     toggleBtn.addEventListener("click", function() {
-        var form = document.getElementById("reviewDropdown");
         if (form.style.display === "flex") {
             form.style.display = "none";
         } else {
@@ -87,5 +88,4 @@
         }
     });
 </script>
-
 {% endblock %}

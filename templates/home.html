@@ -14,7 +14,9 @@
             <!-- Img with lik to its indivisual page -->
             <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
                 <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
-                <div class="scrollbar-hover"></div>
+                <div class="scrollbar-hover">
+                    <span>{{result['name']}}</span>
+                </div>
             </a>
         </div>
         {% endfor %}
@@ -32,7 +34,9 @@
             <!-- Img with lik to its indivisual page -->
             <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
                 <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
-                <div class="scrollbar-hover"></div>
+                <div class="scrollbar-hover">
+                    <span>{{result['name']}}</span>
+                </div>
             </a>
         </div>
         {% endfor %}

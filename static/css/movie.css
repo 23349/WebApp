@@ -1,0 +1,116 @@
+/* Individual movie page */
+.movie-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 50px auto;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 12px;
+    color: var(--color1);
+}
+
+.review-content{
+    margin-top: 5vh; 
+    color: #0F0F0F; 
+    font-size: 12px; 
+    text-align: center;
+}
+.review-content form {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdown-btn{
+    border: none;
+    color: var(--color1);
+    background: none;
+    border-bottom: 2px solid var(--color1);
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: color 100ms ease;
+}
+
+.dropdown-btn:hover{
+    transition: color 150ms ease;
+    cursor: pointer;
+    color: var(--color2);
+}
+
+.dropdown-btn::after{
+    content: "";
+    position: absolute;
+    left: -10%; /* Pulls the line out to the left */
+    bottom: -5px; /* Positions the line just below the text */
+    width: 120%; /* Makes the line 20% wider than the element */
+    height: 3px;
+}
+
+.review-content textarea {
+    width: 90%;
+    height: 75px;
+    margin: 15px 0;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    resize: none; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.review-content textarea:focus {
+    border-color: var(--color2);
+}
+
+.submit-btn {
+    background-color: var(--color2);
+    color: var(--color3);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+    background-color: var(--color4);
+}
+
+.redirect{
+    font-size: var(--font2);
+    text-decoration: underline;
+    color: var(--color2); 
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.star-rating{
+    display: flex; 
+    gap: 10px; 
+    justify-content: center;
+    flex-direction: row-reverse;
+    font-size: calc(1.5vh + 0.9vw);
+}
+
+.star-rating label {
+    color: #c1bfb4;
+    cursor: pointer;
+    transition: color 0.5s;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+/* So basically, first part checks if a star is clicked on, if so it will light up it and the stars taht come before it (swirly -)*/
+/* Next if the user hovers over a star it turns gold*/
+/* Finally all the stars before the one the user is on also turn gold */
+.star-rating input:checked ~ label, .star-rating label:hover, .star-rating label:hover ~ label {
+    color: #ffd041;
+}
