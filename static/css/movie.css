@@ -30,22 +30,12 @@
     border-bottom: 2px solid var(--color1);
     letter-spacing: 1px;
     font-weight: 600;
-    transition: color 100ms ease;
+    transition: color 100ms ease, color 150ms ease;
 }
 
 .dropdown-btn:hover{
-    transition: color 150ms ease;
     cursor: pointer;
     color: var(--color2);
-}
-
-.dropdown-btn::after{
-    content: "";
-    position: absolute;
-    left: -10%; /* Pulls the line out to the left */
-    bottom: -5px; /* Positions the line just below the text */
-    width: 120%; /* Makes the line 20% wider than the element */
-    height: 3px;
 }
 
 .review-content textarea {

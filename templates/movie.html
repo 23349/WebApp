@@ -78,14 +78,12 @@
 {% block script %}
 <script>
   var toggleBtn = document.getElementById("dropdown-btn");
-  var form = document.getElementById("reviewDropdown");
-  
+    var form = document.getElementById("reviewDropdown");
+
+    if (toggleBtn && form) {
     toggleBtn.addEventListener("click", function() {
-        if (form.style.display === "flex") {
-            form.style.display = "none";
-        } else {
-            form.style.display = "flex";
-        }
+        form.style.display = form.style.display === "flex" ? "none" : "flex";
     });
+    }
 </script>
 {% endblock %}

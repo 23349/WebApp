@@ -43,7 +43,7 @@
     text-align: center;
     padding: 5px;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, opacity 0.3s ease;
     border: 3.5px solid var(--color2);
 }
 
@@ -60,6 +60,5 @@
 
 
 .movies:hover .movie-overlay{
-    transition: opacity 0.3s ease;
     opacity: 1;
 }
