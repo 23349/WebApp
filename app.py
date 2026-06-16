@@ -147,15 +147,6 @@ def individual_movie(id):
     # Checks if the movie has a review
     sql = """SELECT AVG(rating) FROM ratings WHERE item_id = ?"""
     movie_review_check = query_db(sql, (id,), one=True)
-    # if movie_review_check:
-    #     sumx = 0
-    #     numx = 0
-    #     for x in int(movie_review_check):
-    #         sumx += x
-    #         numx += 1
-    #     movie_review_data = sumx/numx
-    # else:
-    #     movie_review_data = None
     if movie_review_check and movie_review_check[0] is not None:
         movie_review_data = movie_review_check[0]
     else:

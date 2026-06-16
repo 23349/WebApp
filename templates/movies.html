@@ -5,7 +5,7 @@
 <div class="title">
     <div>MOVIES</div>
     <!-- Filter option: MUST ADD -->
-    <div style="margin-left: auto; margin-right: 50px;">FILTERS</div>
+    <button class="filtersbtn">FILTERS</button>
 </div>
 
 <div class="movies-parent">
@@ -17,7 +17,7 @@
             <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
             <!-- Overlay that appears when you hover on it -->
             <div class="movie-overlay">
-                <span>{{result['name']}}</span>
+                <span>{{results['name']}}</span>
             </div>
         </a>
     </div>
