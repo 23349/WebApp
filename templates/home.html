@@ -2,44 +2,45 @@
 
 {% block body %}
 <div style="margin-top:80px;">
-    <!-- Sideways scrollbar for popular -->
-    <div style="display: flex; justify-content: center;">
-        <!-- Title -->
-        <h2 style="font-size: var(--font2);">POPULAR</h2>
-    </div>
-    <!-- Actual scrollbar -->
-    <div class="home-scrollbar">
-        {% for result in results %}
-        <div class="scrollbar">
-            <!-- Img with lik to its indivisual page -->
-            <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
-                <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
-                <div class="scrollbar-hover">
-                    <span>{{result['name']}}</span>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
-    </div>
+    <div class="duality">
 
-    <!-- Sideways scrollbar for new -->
-    <div style="margin-top: 50px; display: flex; justify-content: center;">
-        <!-- Title -->
-        <h2 style="font-size: var(--font2);">NEW</h2>
-    </div>
-    <!-- Actual scrollbar -->
-    <div class="home-scrollbar">
-        {% for result in results %}
-        <div class="scrollbar">
-            <!-- Img with lik to its indivisual page -->
-            <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
-                <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
-                <div class="scrollbar-hover">
-                    <span>{{result['name']}}</span>
+        <div class="section-container">
+            <h2>NEW</h2>
+            <!-- Sideways scrollbar for popular -->
+            <div class="scrollbar-container">
+                {% for result in results %}
+                <div class="scrollbar">
+                    <!-- Img with lik to its indivisual page -->
+                    <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
+                        <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
+                        <div class="scrollbar-hover">
+                            <span>{{result['name']}}</span>
+                        </div>
+                    </a>
                 </div>
-            </a>
+                {% endfor %}
+            </div>
         </div>
-        {% endfor %}
+
+
+        <div class="section-container">
+            <h2>POPULAR</h2>
+            <!-- Sideways scrollbar for new -->
+            <div class="scrollbar-container">
+                {% for result in results %}
+                <div class="scrollbar">
+                    <!-- Img with lik to its indivisual page -->
+                    <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
+                        <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
+                        <div class="scrollbar-hover">
+                            <span>{{result['name']}}</span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
     </div>
 </div>
 

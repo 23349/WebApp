@@ -1,5 +1,21 @@
+.duality{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(calc(40vw + 80px), 1fr));
+
+}
+
+.section-container {
+    min-width: 0; 
+}
+
+.section-container h2 {
+    margin-left: calc(2vw + 5px);
+    margin-bottom: 15px;
+    color: var(--color1);
+}
+
 /* Home sideways scrollbar */
-.home-scrollbar{
+.scrollbar-container{
     display: flex;
     overflow-x: auto; 
     overflow-y: hidden;
@@ -9,7 +25,7 @@
 }
 
 /* Hides the scrollbar in home scrollbar */
-.home-scrollbar::-webkit-scrollbar {
+.scrollbar-container::-webkit-scrollbar {
     display: none;
 }
 
