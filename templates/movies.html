@@ -5,8 +5,20 @@
 <div class="title">
     <div>MOVIES</div>
     <!-- Filter option: MUST ADD -->
-    <button class="filtersbtn">FILTERS</button>
+    <button id="filtersbtn" class="filtersbtn">FILTERS</button>
+
+    <div class="modul-container">
+        <div id="modul" class="modul">
+            <button>a</button>
+            <button>b</button>
+            <button>c</button>
+            <button>d</button>
+            <button>e</button>
+            <button>confim</button>
+        </div>
+    </div>
 </div>
+
 
 <div class="movies-parent">
     <!-- Displays every movie in db: May need to change -->
@@ -23,6 +35,17 @@
     </div>
     {% endfor %}
 </div>
+{% endblock %}
 
 
+{% block script %}
+<script>
+    const filterbtn = document.getElementById("filtersbtn");
+    const modulMagic = document.getElementById("modul");
+
+    if (filterbtn && modulMagic){
+        filterbtn.addEventListener("click", () => {
+            modulMagic.classList.toggle("show");
+    });}
+</script>
 {% endblock %}

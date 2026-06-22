@@ -77,26 +77,14 @@
 
 {% block script %}
 <script>
-  var toggleBtn = document.getElementById("dropdown-btn");
-    var form = document.getElementById("reviewDropdown");
+    const toggleBtn = document.getElementById("dropdown-btn");
+    const form = document.getElementById("reviewDropdown");
 
     if (toggleBtn && form) {
-    toggleBtn.addEventListener("click", function() {
-
-        toggleBtn.classList.toggle("active");
-        
-        if (form.style.display === "flex") {
-            form.style.display = "none";
-        } else {
-            form.style.display = "flex";
-
-            form.animate(
-                [  { opacity: 0, transform: "translateY(-20px)" }, { opacity: 1, transform: "translateY(0)" }],
-                { duration: 300, easing: "ease"}
-            );
-            
-        }
-    });
-    }
+        toggleBtn.addEventListener("click", () => {
+            toggleBtn.classList.toggle("active");
+            form.classList.toggle("active");
+        });
+}
 </script>
 {% endblock %}

@@ -15,6 +15,7 @@
     margin-top: 50px;
     margin-left: 50px;
     margin-bottom: 15px;
+    position: relative;
 }
 
 .filtersbtn{
@@ -85,7 +86,21 @@
     width: 90%;
 }
 
-
 .movies:hover .movie-overlay{
     opacity: 1;
+}
+
+.modul-container{
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    margin-top: 10px;
+}
+
+.modul{
+    display: none;
+}
+
+.modul.show {
+    display: flex;
 }

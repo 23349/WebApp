@@ -75,9 +75,21 @@
 }
 
 #reviewDropdown {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 8px;
+    opacity: 0;
+    transform: translateY(-20px);
+    visibility: hidden;
+    transition:
+        opacity 300ms ease,
+        transform 300ms ease;
+}
+
+#reviewDropdown.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
 }
 
 .review-content textarea {
