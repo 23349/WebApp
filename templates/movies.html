@@ -6,19 +6,18 @@
     <div>MOVIES</div>
     <!-- Filter option: MUST ADD -->
     <button id="filtersbtn" class="filtersbtn">FILTERS</button>
-
-    <div class="modul-container">
-        <div id="modul" class="modul">
-            <button>a</button>
-            <button>b</button>
-            <button>c</button>
-            <button>d</button>
-            <button>e</button>
-            <button>confim</button>
-        </div>
-    </div>
 </div>
 
+<div id="modul-container" class="modul-container">
+    <div class="modul">
+        <button>a</button>
+        <button>b</button>
+        <button>c</button>
+        <button>d</button>
+        <button>e</button>
+        <button>confirm</button>
+    </div>
+</div>
 
 <div class="movies-parent">
     <!-- Displays every movie in db: May need to change -->
@@ -41,11 +40,10 @@
 {% block script %}
 <script>
     const filterbtn = document.getElementById("filtersbtn");
-    const modulMagic = document.getElementById("modul");
+    const modulContainer = document.getElementById("modul-container");
 
-    if (filterbtn && modulMagic){
-        filterbtn.addEventListener("click", () => {
-            modulMagic.classList.toggle("show");
-    });}
+    filterbtn.addEventListener("click", () => {
+        modulContainer.classList.toggle("show");
+    });
 </script>
 {% endblock %}

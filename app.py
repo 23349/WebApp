@@ -94,6 +94,27 @@ def signup():
         password = request.form['password']
         confirm_password = request.form['confirm-password']
         email = request.form['email']
+
+        if len(username) > 10:
+            flash("Username too long, max is 64 characters", "signup")
+            return render_template("signup.html", email=email)
+        
+        if len(password) >= 8: 
+            flash("Password must be 8+ long", "signup")
+            return render_template("signup.html", username=username, email=email)
+        
+        temp = 0 
+        for x in password:
+            if x in integers:
+                integers = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
+                temp += 1
+        if temp == 0:
+            flash("Password must have a number", "signup")
+            return render_template("signup.html", username=username, email=email)
+            
+        if any(x.isupper() for x in password) == False:
+            flash("Password must have a capital", "signup")
+            return render_template("signup.html", username=username, email=email)
         
         if password != confirm_password:
             flash("Passwords did not match ( o ⌓ o )", "signup")
