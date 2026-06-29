@@ -9,6 +9,7 @@
 </div>
 
 <div id="modul-container" class="modul-container">
+    <button id="exitbtn">&#x2716;</button>
     <div class="modul">
         <button>a</button>
         <button>b</button>
@@ -41,9 +42,14 @@
 <script>
     const filterbtn = document.getElementById("filtersbtn");
     const modulContainer = document.getElementById("modul-container");
+    const closebtn = document.getElementById("exitbtn")
 
     filterbtn.addEventListener("click", () => {
         modulContainer.classList.toggle("show");
+    });
+
+    closebtn.addEventListener("click", () => {
+        modulContainer.classList.toggle("show")
     });
 </script>
 {% endblock %}
