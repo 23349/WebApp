@@ -7,12 +7,11 @@
 
 /* Variable declarations */
 :root{
-    --color1: #000;
-    --color2: #c20000;
-    --color3: #fffef3;
-    --color4: #a00000;
-    --color5: #ffff;
-    --color6: #ffaaaa;
+    --black: #000000;
+    --lightred: #ff6666;
+    --darkred: #8b0000;
+    --white: #ffffff;
+    --pinky: #ffc0cb;
     --font1: clamp(1.5rem, 4vw, 2rem) ;
     --font2: 20px;
 }

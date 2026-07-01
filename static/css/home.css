@@ -11,7 +11,7 @@
 .section-container h2 {
     margin-left: calc(2vw + 5px);
     margin-bottom: 15px;
-    color: var(--color1);
+    color: var(--black);
 }
 
 /* Home sideways scrollbar */
@@ -53,11 +53,11 @@
     padding: 5px;
     opacity: 0;
     transition: opacity 0.3s ease;
-    border: 3.5px solid var(--color2);
+    border: 3.5px solid var(--lightred);
 }
 
 .scrollbar-hover span{
-    color: var(--color5);
+    color: var(--white);
     font-size: 20px;
     position: absolute;
     top: 50%;
