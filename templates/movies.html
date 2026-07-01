@@ -11,18 +11,19 @@
 <div id="modul-container" class="modul-container">
     <button id="exitbtn">&#x2716;</button>
     <div class="modul">
-        <button>a</button>
-        <button>b</button>
-        <button>c</button>
-        <button>d</button>
-        <button>e</button>
-        <button>confirm</button>
+        <button class="dropdown button">Genres</button>
+        <!-- May need a form ok look it up ------------------------------------------------------------------------>
+        <div class = "downdrop"> 
+            {% for result in genres %}
+            <button class ="button">{{result['name']}}</button>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
 <div class="movies-parent">
     <!-- Displays every movie in db: May need to change -->
-    {% for result in results %}
+    {% for result in movies %}
     <div class="movies">
         <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
             <!-- Movie Img -->

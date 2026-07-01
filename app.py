@@ -95,18 +95,18 @@ def signup():
         confirm_password = request.form['confirm-password']
         email = request.form['email']
 
-        if len(username) > 10:
+        if len(username) > 64:
             flash("Username too long, max is 64 characters", "signup")
             return render_template("signup.html", email=email)
         
-        if len(password) >= 8: 
+        if len(password) <= 4: 
             flash("Password must be 8+ long", "signup")
             return render_template("signup.html", username=username, email=email)
         
         temp = 0 
         for x in password:
+            integers = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
             if x in integers:
-                integers = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
                 temp += 1
         if temp == 0:
             flash("Password must have a number", "signup")
@@ -132,8 +132,11 @@ def signup():
 @app.route('/movies')
 def movies():
     sql = """SELECT item.name, item.imgURL, item.item_id FROM item"""
+    genreSql = """SELECT name FROM genre"""
     results = query_db(sql)
-    return render_template("movies.html", results=results)
+    genreResults = query_db(genreSql) 
+    
+    return render_template("movies.html", movies=results, genres=genreResults)
 
 
 
