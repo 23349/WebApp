@@ -95,13 +95,12 @@
     margin-top: 70px;
     top: 0;
     right: 0;
-    width: 20vw;
     height: 100vh;
     z-index: 2;
     opacity: 0;
     visibility: hidden;
-    background-color: rgba(254, 210, 210, 0.5);
-    backdrop-filter: blur(8px) saturate(110%);
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(55px) saturate(120%);
     transform: translateX(50px);
 }
 
@@ -126,6 +125,7 @@
 }
 
 .modul {
+    width: 20vw;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -137,11 +137,26 @@
 
 .button{
     box-sizing: border-box;
-    background-color: var(--pinky);
-    color: var(--white);
+    background-color: var(--white);
+    color: var(--black);
     border: 1px solid var(--black);
-    border-radius: 4px;
     font-weight: 600;
     cursor: pointer;
     letter-spacing: 1px;
+}
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+#dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    margin-top: 35px;
+}
+
+#dropdown-content.open {
+    display: block;
 }

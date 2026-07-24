@@ -11,13 +11,16 @@
 <div id="modul-container" class="modul-container">
     <button id="exitbtn">&#x2716;</button>
     <div class="modul">
-        <button class="dropdown button">Genres</button>
-        <!-- May need a form ok look it up ------------------------------------------------------------------------>
-        <div class = "downdrop"> 
-            {% for result in genres %}
-            <button class ="button">{{result['name']}}</button>
-            {% endfor %}
+        <button id="genresbtn" class="dropdown button">Genres</button>
+
+        <div id="dropdown-content"> 
+            <form method="GET" action="{{ url_for('movies') }}">
+                {% for result in genres %}
+                    <button type="submit" class="button" name="genre" value="{{ result['name'] }}">{{result['name']}}</button>
+                {% endfor %}
+            </form>
         </div>
+
     </div>
 </div>
 
@@ -43,14 +46,29 @@
 <script>
     const filterbtn = document.getElementById("filtersbtn");
     const modulContainer = document.getElementById("modul-container");
-    const closebtn = document.getElementById("exitbtn")
+    const closebtn = document.getElementById("exitbtn");
 
     filterbtn.addEventListener("click", () => {
         modulContainer.classList.toggle("show");
     });
 
     closebtn.addEventListener("click", () => {
-        modulContainer.classList.toggle("show")
+        modulContainer.classList.toggle("show");
+    });
+
+    window.addEventListener("click", (event) => {
+       if (event.target !== filterbtn && !modulContainer.contains(event.target)) {
+            if (modulContainer.classList.contains('show')) {
+                modulContainer.classList.remove('show');
+            }
+    }
+});
+
+    const genresbtn = document.getElementById("genresbtn");
+    const dropdownContent = document.getElementById("dropdown-content");
+
+    genresbtn.addEventListener("click", () => {
+        dropdownContent.classList.toggle("open");
     });
 </script>
 {% endblock %}

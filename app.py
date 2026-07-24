@@ -131,12 +131,21 @@ def signup():
 # Gets all the movies and their information
 @app.route('/movies')
 def movies():
-    sql = """SELECT item.name, item.imgURL, item.item_id FROM item"""
-    genreSql = """SELECT name FROM genre"""
-    results = query_db(sql)
-    genreResults = query_db(genreSql) 
-    
-    return render_template("movies.html", movies=results, genres=genreResults)
+    genreSelect = request.args.get("genre")
+
+    if genreSelect:
+        sql = """SELECT item.name, imgURL, item.item_id FROM item
+        JOIN itemGenre ON item.item_id = itemGenre.item_id
+        JOIN genre ON itemGenre.genre_id = genre.genre_id
+        WHERE genre.name = ?"""
+        results = query_db(sql, (genreSelect,))
+    else:
+        sql = "SELECT name, imgURL, item_id FROM item"
+        results = query_db(sql)
+
+    genres = query_db("SELECT name FROM genre")
+
+    return render_template("movies.html", movies=results, genres=genres)
 
 
 
@@ -188,7 +197,6 @@ def individual_movie(id):
         user_review_check = query_db(sql, (id, g.user['user_id']), one=True)
         if user_review_check:
             user_review_data = user_review_check
-    # If they are, it will check if they have already left a review
     else:
         flash("You must be logged in to review!", "review")
 

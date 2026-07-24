@@ -8,10 +8,10 @@
 /* Variable declarations */
 :root{
     --black: #000000;
-    --lightred: #ff6666;
+    --lightred: #c20000;
     --darkred: #8b0000;
     --white: #ffffff;
-    --pinky: #ffc0cb;
+    --pinky: #ff6666;
     --font1: clamp(1.5rem, 4vw, 2rem) ;
     --font2: 20px;
 }

@@ -35,7 +35,7 @@ def draw_out_string(string):
 def breakingRecords(scores):
     current_max = scores[0]
     current_min = scores[0]
-    record_br = []
+    record_br = []e>
 
     for x in scores:
         x = int(x)
@@ -79,4 +79,16 @@ def countKeyChanges(s):
             count += 1
     print(count)
 
-countKeyChanges("AaAabaaA")
+# countKeyChanges("AaAabaaA")
+
+
+def climbStairs(n):
+    if n <= 1:
+        return 1
+    x = [1] * (n + 1)
+
+    for y in range(2, n+1):
+        x[y] = x[y - 1] + x[y - 2]
+    return sum(x)
+
+print(climbStairs(121727)) 
