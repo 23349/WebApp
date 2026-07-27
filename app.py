@@ -1,5 +1,5 @@
 # My Ratings WebApp
-from flask import Flask, g, render_template, request, url_for, redirect, session, flash
+from flask import Flask, g, render_template, request, url_for, redirect, session, flash, jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
 
@@ -78,6 +78,7 @@ def login():
     return render_template("login.html")
 
 
+
 # You can leave...if you want to...but i hope you stay ( T - T )
 @app.route('/logout')
 def logout():
@@ -131,6 +132,17 @@ def signup():
 # Gets all the movies and their information
 @app.route('/movies')
 def movies():
+    sql = "SELECT name, imgURL, item_id FROM item"
+    results = query_db(sql)
+    genres = query_db("SELECT name FROM genre")
+
+    return render_template("movies.html", movies=results, genres=genres)
+
+
+
+# Will allow the user to filter results without needing the page to refresh
+@app.route('/api/movies')
+def api_movies():
     genreSelect = request.args.get("genre")
 
     if genreSelect:
@@ -138,14 +150,25 @@ def movies():
         JOIN itemGenre ON item.item_id = itemGenre.item_id
         JOIN genre ON itemGenre.genre_id = genre.genre_id
         WHERE genre.name = ?"""
-        results = query_db(sql, (genreSelect,))
+        # Added the crucial comma here to make it a valid tuple!
+        raw_results = query_db(sql, (genreSelect,)) 
     else:
         sql = "SELECT name, imgURL, item_id FROM item"
-        results = query_db(sql)
+        raw_results = query_db(sql)
+    
+    # A list to convert the results
+    converted_results = []
 
-    genres = query_db("SELECT name FROM genre")
-
-    return render_template("movies.html", movies=results, genres=genres)
+    # Tuples --> dictionary
+    if raw_results:
+        for row in raw_results:
+            converted_results.append({
+                'name': row[0], 
+                'imgURL': row[1],
+                'item_id': row[2]
+            })
+            
+    return jsonify(converted_results)
 
 
 
@@ -165,6 +188,7 @@ def search():
     if not results:
         flash(f"No results found for '{search}'", "search_error")
     return render_template("movies.html", results=results)
+
 
 
 # Will get the information for the movie that is clicked on and render the page for it:
@@ -204,7 +228,6 @@ def individual_movie(id):
 
 
 
-
 # Will allow the user to leave a review
 @app.route('/review', methods=['POST'])
 def review():
@@ -216,6 +239,7 @@ def review():
         query_db("INSERT INTO ratings (review, user_id, item_id, rating) VALUES (?, ?, ?, ?)", (review_text, g.user['user_id'], movie_id, star_review))
     
     return redirect(url_for('individual_movie', id=movie_id))
+
 
 
 if __name__ == "__main__":

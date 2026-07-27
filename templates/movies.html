@@ -11,14 +11,15 @@
 <div id="modul-container" class="modul-container">
     <button id="exitbtn">&#x2716;</button>
     <div class="modul">
+
         <button id="genresbtn" class="dropdown button">Genres</button>
 
-        <div id="dropdown-content"> 
-            <form method="GET" action="{{ url_for('movies') }}">
+        <div class="dropdown-container">
+            <div id="dropdown-content"> 
                 {% for result in genres %}
-                    <button type="submit" class="button" name="genre" value="{{ result['name'] }}">{{result['name']}}</button>
+                    <button type="button" class="genre-filter-btn button" data-genre="{{ result['name'] }}">{{result['name']}}</button>
                 {% endfor %}
-            </form>
+            </div>
         </div>
 
     </div>
@@ -44,31 +45,83 @@
 
 {% block script %}
 <script>
+    // Js for the modul 
+    // variable decleration
     const filterbtn = document.getElementById("filtersbtn");
     const modulContainer = document.getElementById("modul-container");
     const closebtn = document.getElementById("exitbtn");
 
+    // modul show when filter btn is clicked
     filterbtn.addEventListener("click", () => {
         modulContainer.classList.toggle("show");
     });
 
+    // modul hide when close btn is clciked
     closebtn.addEventListener("click", () => {
         modulContainer.classList.toggle("show");
     });
 
+    // modul hide when window is clicked
     window.addEventListener("click", (event) => {
+        // prevents closing if modul or anything in it is clicked
        if (event.target !== filterbtn && !modulContainer.contains(event.target)) {
             if (modulContainer.classList.contains('show')) {
                 modulContainer.classList.remove('show');
             }
     }
-});
+    });
 
+    // Js for the genre dropdown
+    // variable dec
     const genresbtn = document.getElementById("genresbtn");
     const dropdownContent = document.getElementById("dropdown-content");
 
+    // toggle the status of the dropdown
     genresbtn.addEventListener("click", () => {
         dropdownContent.classList.toggle("open");
+    });
+
+    // Js for the genre btns to filter out results
+    // variable dec
+   const genreButtons = document.querySelectorAll('.genre-filter-btn');
+
+   // Loops through each button in the genreButtons and adds event listeners etc
+    genreButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+
+            // Gets the genre of the button I assigned it
+            const selectedGenre = e.target.getAttribute('data-genre');
+            
+            // Sends the request to app.py as a JSON
+            fetch(`/api/movies?genre=${selectedGenre}`)
+                .then(response => response.json())
+
+                .then(data => {
+
+                    // Clears the othe rmovies that were on the page
+                    const container = document.querySelector('.movies-parent');
+                    container.innerHTML = ''; 
+                    
+                    // Goes through the new movies and adds them
+                    data.forEach(movie => {
+                        const movieDiv = document.createElement('div');
+                        movieDiv.className = 'movies'; 
+                        
+                        // Makes the html for the new movies
+                        movieDiv.innerHTML = `
+                            <a href="/individual_movie/${movie.item_id}">
+                                <img src="${movie.imgURL}" alt="An image of ${movie.name}">
+                                <div class="movie-overlay">
+                                    <span>${movie.name}</span>
+                                </div>
+                            </a>
+                        `;
+                        
+                        // Adds it to the movies-parent
+                        container.appendChild(movieDiv);
+                    });
+                })
+        });
     });
 </script>
 {% endblock %}
