@@ -1,4 +1,4 @@
-# My Ratings WebApp
+# My Ratings WebApp users page, improve home page, add night mode, improve genres, get all images
 from flask import Flask, g, render_template, request, url_for, redirect, session, flash, jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3

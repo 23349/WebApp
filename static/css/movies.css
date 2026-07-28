@@ -108,9 +108,7 @@
     transform: translateX(0px);
     opacity: 1;
     visibility: visible;
-    transition:
-        opacity 300ms ease,
-        transform 500ms ease;
+    transition: opacity 300ms ease, transform 500ms ease;
 }
 
 #exitbtn {
@@ -149,11 +147,16 @@
 }
 
 #dropdown-content {
-    display: none;
     position: absolute;
     min-width: 160px;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.2s ease
 }
 
 #dropdown-content.open {
-    display: block;
+   visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
 }
