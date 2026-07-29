@@ -1,5 +1,5 @@
 /* This resets default browser margins and makes the body take up the full screen */
-body {
+.error-body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,7 +35,7 @@ body {
     position: absolute;
     left: 0;
     bottom: -3px;
-    transform-origin: left;
+    transform-origin: right;
 }
 
 .error-container a:hover {
@@ -45,4 +45,5 @@ body {
 .error-container a:hover::after {
     background-color: #0056b3;
     transform: scaleX(1);
+    transform-origin: left;
 }
