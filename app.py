@@ -1,4 +1,4 @@
-# My Ratings WebApp users page, improve home page, add night mode, improve genres, get all images
+# My Ratings WebApp users page, improve home page, allow users to edit and view other comments, improve genres, get all images, fix the sign up, search broken
 from flask import Flask, g, render_template, request, url_for, redirect, session, flash, jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
@@ -46,6 +46,13 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = query_db("SELECT * FROM user WHERE user_id = ?", [user], one=True)
+
+
+
+# 404 PAGE
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 
 
@@ -104,14 +111,14 @@ def signup():
             flash("Password must be 8+ long", "signup")
             return render_template("signup.html", username=username, email=email)
         
-        temp = 0 
-        for x in password:
-            integers = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
-            if x in integers:
-                temp += 1
-        if temp == 0:
-            flash("Password must have a number", "signup")
-            return render_template("signup.html", username=username, email=email)
+        # temp = 0 
+        # for x in password:
+        #     integers = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
+        #     if x in integers:
+        #         temp += 1
+        # if temp == 0:
+        #     flash("Password must have a number", "signup")
+        #     return render_template("signup.html", username=username, email=email)
             
         if any(x.isupper() for x in password) == False:
             flash("Password must have a capital", "signup")
@@ -197,9 +204,9 @@ def individual_movie(id):
     sql = """SELECT * FROM item WHERE item_id = ?"""
     result = query_db(sql, (id,), one=True)
 
-    # Checks if there even is a movie:
+
     if result is None:
-        return ("Movie not found 404")
+        return page_not_found(404)
     
     # Checks if the movie has a review
     sql = """SELECT AVG(rating) FROM ratings WHERE item_id = ?"""
