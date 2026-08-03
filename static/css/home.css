@@ -53,7 +53,7 @@
     display: flex;
     overflow-x: auto; 
     overflow-y: hidden;
-    gap: 16px; 
+    gap: 12px; 
     max-width: 95%; 
     margin: auto;
     padding: 0 4px;

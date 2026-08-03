@@ -15,7 +15,7 @@
         
         <!-- Sideways scrollbar for new realeses -->
         <div class="scrollbar-container">
-            {% for result in results %}
+            {% for result in results2 %}
             <div class="scrollbar">
                 <!-- Img with lik to its indivisual page -->
                 <a href="{{ url_for('individual_movie', id=result['item_id']) }}">

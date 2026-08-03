@@ -60,8 +60,10 @@ def page_not_found(error):
 @app.route('/')
 def home(): 
     sql = """SELECT item.name, item.imgURL, item.item_id FROM item"""
+    sql2 = """SELECT item.name, item.imgURL, item.item_id FROM item ORDER BY item.item_id DESC"""
     results = query_db(sql)
-    return render_template("home.html", results=results)
+    results2 = query_db(sql2)
+    return render_template("home.html", results=results, results2=results2)
 
 
 
