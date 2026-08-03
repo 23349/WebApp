@@ -4,7 +4,6 @@
 <!-- Title -->
 <div class="title">
     <div>MOVIES</div>
-    <!-- Filter option: MUST ADD -->
     <button id="filtersbtn" class="filtersbtn">FILTERS</button>
 </div>
 
@@ -12,7 +11,10 @@
     <button id="exitbtn">&#x2716;</button>
     <div class="modul">
 
-        <button id="genresbtn" class="dropdown button">Genres</button>
+        <button id="genresbtn" class="downarrowButton button">
+            <div style="margin-left: auto; font-size: 14px;">Genres</div>
+            <div id="downarrow">></div>
+        </button>
 
         <div class="dropdown-container">
             <div id="dropdown-content"> 
@@ -31,7 +33,7 @@
     <div class="movies">
         <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
             <!-- Movie Img -->
-            <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
+            <img src="{{result['imgURL']}}" alt ="Movie poster for  {{result['name']}}">
             <!-- Overlay that appears when you hover on it -->
             <div class="movie-overlay">
                 <span>{{result['name']}}</span>
@@ -45,7 +47,7 @@
 
 {% block script %}
 <script>
-    // Js for the modul 
+    // JS for the modul 
     // variable decleration
     const filterbtn = document.getElementById("filtersbtn");
     const modulContainer = document.getElementById("modul-container");
@@ -73,19 +75,21 @@
 
 
 
-    // Js for the genre dropdown
+    // JS for the genre dropdown
     // variable dec
     const genresbtn = document.getElementById("genresbtn");
     const dropdownContent = document.getElementById("dropdown-content");
+    const arrow = document.getElementById("downarrow");
 
-    // toggle the status of the dropdown
+    // toggle the status of the dropdown and its little wittle arrow
     genresbtn.addEventListener("click", () => {
         dropdownContent.classList.toggle("open");
+        arrow.classList.toggle("rotate");
     });
 
 
     
-    // Js for the genre btns to filter out results
+    // JS for the genre btns to filter out results
     // variable dec
    const genreButtons = document.querySelectorAll('.genre-filter-btn');
 

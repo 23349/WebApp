@@ -1,51 +1,51 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<div style="margin-top:80px;">
-    <div class="duality">
-
-        <div class="section-container">
-            <h2>NEW</h2>
-            <!-- Sideways scrollbar for popular -->
-            <div class="scrollbar-container">
-                {% for result in results %}
-                <div class="scrollbar">
-                    <!-- Img with lik to its indivisual page -->
-                    <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
-                        <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
-                        <div class="scrollbar-hover">
-                            <span>{{result['name']}}</span>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
-
-        <div class="section-container">
-            <h2>POPULAR</h2>
-            <!-- Sideways scrollbar for new -->
-            <div class="scrollbar-container">
-                {% for result in results %}
-                <div class="scrollbar">
-                    <!-- Img with lik to its indivisual page -->
-                    <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
-                        <img src="{{result['imgURL']}}" alt ="An image of {{result['name']}}">
-                        <div class="scrollbar-hover">
-                            <span>{{result['name']}}</span>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+<div class="welcome-container">
+    <div class="welcome">
+        <h1>Welcome to Popcorn</h1>
+        <p>Discover, review, and keep track of your favorite films. Explore what's fresh in theaters or check out popular all-time classics below!</p>
     </div>
+</div>
 
-    <div style="margin-top: 75px; margin-left: 50px; margin-right:50px;">
-        <div style="text-align: center; height: 100vh; background-image: url();">
+<div class="home-content">
+
+    <section class="section-container">
+        <h2>NEW RELEASES</h2>
+        
+        <!-- Sideways scrollbar for new realeses -->
+        <div class="scrollbar-container">
+            {% for result in results %}
+            <div class="scrollbar">
+                <!-- Img with lik to its indivisual page -->
+                <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
+                    <img src="{{result['imgURL']}}" alt ="Movie poster for {{result['name']}}">
+                    <div class="scrollbar-hover">
+                        <span>{{result['name']}}</span>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
         </div>
-    </div>
+    </section>
+
+    <section class="section-container">
+        <h2>POPULAR</h2>
+        <!-- Sideways scrollbar for new -->
+        <div class="scrollbar-container">
+            {% for result in results %}
+            <div class="scrollbar">
+                <!-- Img with lik to its indivisual page -->
+                <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
+                    <img src="{{result['imgURL']}}" alt ="Movie poster for  {{result['name']}}">
+                    <div class="scrollbar-hover">
+                        <span>{{result['name']}}</span>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 
 </div>
 
