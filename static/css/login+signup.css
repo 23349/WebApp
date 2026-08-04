@@ -31,7 +31,7 @@
     width: 100%;
     margin-top: 15px;
     padding: 12px;
-    background-color: #00bf63;
+    background-color: var(--green);
     color: var(--black);
     font-weight: 600;
     border: none;
@@ -42,7 +42,7 @@
 
 .account-container button:hover {
     color: var(--white);
-    background-color: #00a354;
+    background-color: var(--darkergreen);
     opacity: 0.9;
 }
 
