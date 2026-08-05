@@ -90,7 +90,8 @@
 .modul-container {
     position:fixed;
     margin-top: 70px;
-    inset: 0;
+    top: 0;
+    right: 0;
     height: 100vh;
     z-index: 2;
     opacity: 0;
@@ -144,6 +145,32 @@
     align-items: center;
 }
 
+.genre-filter-btn{
+    position: relative;
+}
+
+.genre-filter-btn.on{
+    color: var(--white);
+    background-color: var(--black);
+    padding-right: 20px;
+}
+
+.genre-filter-btn.on::after {
+    content: "\2716";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: inherit;
+
+    /* Btw just learnt that right, top etc uses the edge of an elemnt not the centre */
+    /* I wasted 10 min trying to figure out why 50% wasn't centered */
+    right: 5px;
+    top: 45%;
+}
+
 #downarrow{
     margin-left: auto;
     margin-right: 5px;
@@ -158,19 +185,34 @@
 
 .dropdown-container {
     position: relative;
+    width: 100%;
 }
 
 #dropdown-content {
-    position: absolute;
-    min-width: 160px;
-    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
     opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.2s ease
+    transition: all 0.2s ease;
+    display: block;
+    gap: 8px;
 }
 
 #dropdown-content.open {
-   visibility: visible;
+    max-height: 400px; 
     opacity: 1;
-    transform: translateY(0);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.disclaimer-container{
+    display: flex; 
+    justify-content: center; 
+    text-align: center;
+    margin-top: 50px;
+}
+
+.disclaimer{
+    text-transform: uppercase;
+    font-weight: 600;
+    transform: rotate(20deg);
 }

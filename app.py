@@ -1,4 +1,4 @@
-# My Ratings WebApp need a users page, improve home page, allow users to edit and view other comments, improve genres, get all images, fix the sign up, search broken, sql test
+# My Ratings WebApp need a users page, allow users to edit and view other comments fix the sign up, sql test
 from flask import Flask, g, render_template, request, url_for, redirect, session, flash, jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
@@ -167,7 +167,6 @@ def api_movies():
         JOIN itemGenre ON item.item_id = itemGenre.item_id
         JOIN genre ON itemGenre.genre_id = genre.genre_id
         WHERE genre.name = ?"""
-        # Added the crucial comma here to make it a valid tuple!
         raw_results = query_db(sql, (genreSelect,)) 
     else:
         sql = "SELECT name, imgURL, item_id FROM item"
@@ -178,11 +177,11 @@ def api_movies():
 
     # Tuples --> dictionary
     if raw_results:
-        for row in raw_results:
+        for x in raw_results:
             converted_results.append({
-                'name': row[0], 
-                'imgURL': row[1],
-                'item_id': row[2]
+                'name': x[0], 
+                'imgURL': x[1],
+                'item_id': x[2]
             })
             
     return jsonify(converted_results)

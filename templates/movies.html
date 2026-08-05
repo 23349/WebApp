@@ -7,6 +7,22 @@
     <button id="filtersbtn" class="filtersbtn">FILTERS</button>
 </div>
 
+<div class="movies-parent">
+    <!-- Displays every movie in db: May need to change -->
+    {% for result in movies %}
+    <div class="movies">
+        <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
+            <!-- Movie Img -->
+            <img src="{{result['imgURL']}}" alt ="Movie poster for  {{result['name']}}">
+            <!-- Overlay that appears when you hover on it -->
+            <div class="movie-overlay">
+                <span>{{result['name']}}</span>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
 <div id="modul-container" class="modul-container">
     <button id="exitbtn">&#x2716;</button>
     <div class="modul">
@@ -24,26 +40,13 @@
             </div>
         </div>
 
-    </div>
-</div>
+        <div class="disclaimer-container">
+            <span class="disclaimer">more options coming soon</span>
+        </div>
 
-<div class="movies-parent">
-    <!-- Displays every movie in db: May need to change -->
-    {% for result in movies %}
-    <div class="movies">
-        <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
-            <!-- Movie Img -->
-            <img src="{{result['imgURL']}}" alt ="Movie poster for  {{result['name']}}">
-            <!-- Overlay that appears when you hover on it -->
-            <div class="movie-overlay">
-                <span>{{result['name']}}</span>
-            </div>
-        </a>
     </div>
-    {% endfor %}
 </div>
 {% endblock %}
-
 
 {% block script %}
 <script>
@@ -93,15 +96,41 @@
     // variable dec
    const genreButtons = document.querySelectorAll('.genre-filter-btn');
 
+    // Variable to remenber the genre that was chosen
+   let currentGenre = null; // Keeps track of the selected genre
+
    // Loops through each button in the genreButtons and adds event listeners etc
     genreButtons.forEach(button => {
         button.addEventListener('click', (e) => {
 
             // Gets the genre of the button I assigned it
             const selectedGenre = e.target.getAttribute('data-genre');
+
+            // Check is same button clicked
+            if (currentGenre === selectedGenre) {
+                currentGenre = null;
+
+                // makes the reselected button WHITE
+                e.target.classList.remove('on');
+            } else {
+                currentGenre = selectedGenre;
+
+                // makes all buttons WHITE
+                genreButtons.forEach(btn => btn.classList.remove('on'));
+
+                // makes the now selected one BLACK
+                e.target.classList.add('on');
+            }
+
+            // Remove if same clicked
+            if (currentGenre) {
+                url = `/api/movies?genre=${currentGenre}`;
+            } else {
+                url = `/api/movies`;
+            }
             
             // Sends the request to app.py as a JSON
-            fetch(`/api/movies?genre=${selectedGenre}`)
+            fetch(url)
                 .then(response => response.json())
 
                 .then(data => {
