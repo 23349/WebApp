@@ -1,4 +1,4 @@
-# My Ratings WebApp need a users page, allow users to edit and view other comments fix the sign up, sql test
+# My Ratings WebAppand view other comments, fix the sign up and search, sql test
 from flask import Flask, g, render_template, request, url_for, redirect, session, flash, jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
@@ -248,18 +248,28 @@ def individual_movie(id):
 
 
 
-# Will allow the user to leave a review
+# Will allow the user to leave a review or eidt their old one
 @app.route('/review', methods=['POST'])
 def review():
     movie_id = request.form.get('movie_id')
     review_text = request.form.get('review')
+    star_review = request.form.get('star')
 
+    # sql to cehck if a review already exists and they are editing
+    sql = """SELECT * FROM ratings WHERE user_id = ? AND item_id = ?"""
+    existing_review = query_db(sql, (g.user['user_id'], movie_id))
 
-    # Checks if there is both a review and matching id then
-    # inserts that data along with the user id into the review db
-    if review_text and movie_id:
-        star_review = request.form.get('star')
-        query_db("INSERT INTO ratings (review, user_id, item_id, rating) VALUES (?, ?, ?, ?)", (review_text, g.user['user_id'], movie_id, star_review))
+    # if tyey already have a review it will update 
+    if existing_review:
+        sql = """UPDATE ratings SET review = ?, rating = ? WHERE user_id = ? AND item_id = ?"""
+        query_db(sql,(review_text, star_review, g.user['user_id'], movie_id))
+
+    # if they dont it will add one
+    else:
+        if star_review and movie_id:
+            sql = """INSERT INTO ratings (review, user_id, item_id, rating) VALUES (?, ?, ?, ?)"""
+            query_db(sql, (review_text, g.user['user_id'], movie_id, star_review))
+    
     
     return redirect(url_for('individual_movie', id=movie_id))
 
@@ -267,4 +277,3 @@ def review():
 
 if __name__ == "__main__":
     app.run(debug=True)
-

@@ -4,7 +4,7 @@
 <!-- Displays the movie poster etc-->
 <div class="movie-container">
     <div class="movie-poster">
-        <img src="{{movie['imgURL']}}" alt=" A image of the movie {{movie['name']}}">
+        <img src="{{movie['imgURL']}}" alt="An image of the movie {{movie['name']}}">
     </div>
 
     <!-- Movie name and desciption -->
@@ -12,7 +12,7 @@
         <div>
             <h1 style="margin-top: 0;">{{movie['name']}}</h1>
             {% if movie_rating %}
-                <h4>{{movie_rating}}</h4>
+                <h4>{{movie_rating}} <span style="color: #ffd041;">★</span></h4>
             {% else %}
                 <h4>UNRATED</h4>
             {% endif %}
@@ -22,38 +22,48 @@
         <!-- Checks if a user is logged in -->
         {% if g.user %}
 
-            <!-- Checks if they have alreafy left a review on this movie-->
-            {% if user_review  %}
-                    <div style="margin-top: 15vh;font-size: 12px; text-align: center;">
-                        <h3>Your rating: {{user_review['rating']}}</h3>
-                        <h3>Your review:</h3>
-                        <h3>{{user_review['review']}}</h3> 
+            <!-- Checks if they have already left an review on this page -->
+            {% if user_review %}
+                <div class="review-content">
+                    <div class="edit-review-top">
+                        <span id="user-rating">Your Review: {{ user_review['rating'] }} <span style="color: #ffd041;">★</span></span>
+                        <button id="edit-review-btn" type="button">EDIT</button>
                     </div>
+
+                    <div id="review-box">
+                        <p class="user-review">{{ user_review['review'] }}</p>
+                    </div>
+                    
+                    <form id="edit-review-form" method="post" action="{{ url_for('review') }}">
+                        <input type="hidden" name="movie_id" value="{{ movie['item_id'] }}">
+
+                        <div class="star-rating">
+                            {% for i in range(5, 0, -1) %}
+                                <!-- the jinja in the input is usde to check if the star matches the users preslected star, then applies checked to it  -->
+                                <input type="radio" id="edit{{i}}star" name="star" value="{{i}}" {% if user_review['rating'] == i %} checked {% endif %}>
+                                <label for="edit{{i}}star" title="{{i}} stars">★</label>
+                            {% endfor %}
+                        </div>
+
+                        <textarea name="review" placeholder="Update your review...">{{ user_review['review'] }}</textarea>
+                        <button type="submit" class="submit-btn">SAVE CHANGES</button>
+                    </form>
+                </div>
+
             {% else %}
 
             <!-- If they haven't then it will let them -->
             <div class="review-content">
-                <button id="dropdown-btn" class="dropdown-btn">REVIEW</button>
-                <form style="gap: 10px;" id="reviewDropdown" method="post" action="{{url_for('review')}}">
+                <button id="dropdown-btn">REVIEW</button>
+                <form style="gap: 10px;" id="review-dropdown" method="post" action="{{url_for('review')}}">
                     <input type="hidden" name="movie_id" value="{{movie['item_id']}}">
-                    <div>
-                        <!-- Allow the user to alsp leave a star rating! -->
-                        <div class="star-rating">
-                            <input type="radio" id="5star" name="star" value="5">
-                            <label for="5star" title="5 stars">★</label>
 
-                            <input type="radio" id="4star" name="star" value="4">
-                            <label for="4star" title="4 stars">★</label>
-
-                            <input type="radio" id="3star" name="star" value="3">
-                            <label for="3star" title="3 stars">★</label>
-
-                            <input type="radio" id="2star" name="star" value="2">
-                            <label for="2star" title="2 stars">★</label>
-
-                            <input type="radio" id="1star" name="star" value="1">
-                            <label for="1star" title="1 star">★</label>
-                        </div>
+                    <!-- Allow the user to alsp leave a star rating! -->
+                    <div class="star-rating">
+                        {% for i in range(5, 0, -1) %}
+                            <input type="radio" id="{{i}}star" name="star" value="{{i}}">
+                            <label for="{{i}}star" title="{{i}} stars">★</label>
+                        {% endfor %}
                     </div>
 
                     <textarea name="review" placeholder="Tell us what you think..."></textarea>
@@ -64,7 +74,7 @@
         
         <!-- If there isnt a logged in user it leaves a log in redirect -->
         {% else %}
-            <div style="margin-top: 15vh;font-size: 12px; text-align: center;">
+            <div style="margin-top: 15vh; font-size: 12px; text-align: center;">
                 <a href="{{ url_for('login') }}">
                     <!-- Redirect button -->
                     <button class="redirect">PLEASE LOGIN TO REVIEW</button>
@@ -72,23 +82,38 @@
             </div>
         {% endif %}
     </div>
+</div>
 
-    <div>
-        <h1>Reviews:</h1>
-    </div>
+<div class="reviews-container">
+    <span class="reviews-container-title">Reviews</span>
 </div>
 {% endblock %}
 
 {% block script %}
 <script>
+    // Js for making a new review
     const toggleBtn = document.getElementById("dropdown-btn");
-    const form = document.getElementById("reviewDropdown");
+    const form = document.getElementById("review-dropdown");
 
     if (toggleBtn && form) {
         toggleBtn.addEventListener("click", () => {
             toggleBtn.classList.toggle("active");
             form.classList.toggle("active");
         });
-}
+    }   
+
+    // Js for editing an existing review
+    const editBtn = document.getElementById("edit-review-btn");
+    const editForm = document.getElementById("edit-review-form");
+    const editReview = document.getElementById("review-box");
+    const editRating = document.getElementById("user-rating");
+
+    if (editBtn && editForm) {
+        editBtn.addEventListener("click", () => {
+            editForm.classList.toggle("active");
+            editReview.classList.toggle("hide");
+            editRating.classList.toggle("hide");
+        });
+    }
 </script>
 {% endblock %}

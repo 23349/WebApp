@@ -156,7 +156,7 @@
 }
 
 .genre-filter-btn.on::after {
-    content: "\2716";
+    content: "\2716"; /* why doesn't css just also use the html hex*/
     position: absolute;
     right: 10px;
     top: 50%;
@@ -166,7 +166,7 @@
     color: inherit;
 
     /* Btw just learnt that right, top etc uses the edge of an elemnt not the centre */
-    /* I wasted 10 min trying to figure out why 50% wasn't centered */
+    /* I wasted 10 min trying to figure out why a top 50% wasn't centered */
     right: 5px;
     top: 45%;
 }
