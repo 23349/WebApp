@@ -193,11 +193,20 @@
     color: #ffd041;
 }
 
+#edit-review-top-master-of-puppets.on{
+    display: flex;
+    justify-content: center;
+}
+
 .edit-review-top{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
+}
+
+.edit-review-top.edit{
+    justify-content: center;
 }
 
 #user-rating{
@@ -213,9 +222,15 @@
 #review-box{
     background-color: var(--white); 
     border: 1px solid #e0e0e0; 
-    border-radius: 8px; 
+    border-radius: 4px; 
     padding: 12px 16px; 
     margin-bottom: 16px;
+    min-height: 60px;
+    max-height: 150px;
+    overflow-y: auto; 
+    resize: none;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(194, 0, 0, 0.6) rgba(0, 0, 0, 0); 
 }
 
 #review-box.hide{
@@ -237,7 +252,6 @@
     font-weight: 600;
     transition: color 100ms ease;
     cursor: pointer;
-    padding: 0px 28px;
 }
 
 #edit-review-btn:hover{

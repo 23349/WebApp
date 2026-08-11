@@ -8,7 +8,7 @@
     </div>
 
     <!-- Movie name and desciption -->
-    <div style="display: inline-block;">
+    <div>
         <div>
             <h1 style="margin-top: 0;">{{movie['name']}}</h1>
             {% if movie_rating %}
@@ -25,9 +25,11 @@
             <!-- Checks if they have already left an review on this page -->
             {% if user_review %}
                 <div class="review-content">
-                    <div class="edit-review-top">
-                        <span id="user-rating">Your Review: {{ user_review['rating'] }} <span style="color: #ffd041;">★</span></span>
-                        <button id="edit-review-btn" type="button">EDIT</button>
+                    <div id="edit-review-top-master-of-puppets">
+                        <div class="edit-review-top">
+                            <span id="user-rating">Your Review: {{ user_review['rating'] }} <span style="color: #ffd041;">★</span></span>
+                            <button id="edit-review-btn" type="button">EDIT</button>
+                        </div>
                     </div>
 
                     <div id="review-box">
@@ -107,12 +109,28 @@
     const editForm = document.getElementById("edit-review-form");
     const editReview = document.getElementById("review-box");
     const editRating = document.getElementById("user-rating");
+    const editTopMaster = document.getElementById("edit-review-top-master-of-puppets");
 
-    if (editBtn && editForm) {
+    // sets editing to false
+    let editing = false;
+
+    if (editBtn) {
         editBtn.addEventListener("click", () => {
-            editForm.classList.toggle("active");
-            editReview.classList.toggle("hide");
-            editRating.classList.toggle("hide");
+            // switches editing between true and false
+            editing = !editing;
+
+            if (editing) {
+                editBtn.textContent = "CANCEL";
+            } else {
+                editBtn.textContent = "EDIT";
+            
+            }
+
+        // the editing is to tell it to switch if editing is true
+        editForm.classList.toggle("active", editing);
+        editReview.classList.toggle("hide", editing);
+        editRating.classList.toggle("hide", editing);
+        editTopMaster.classList.toggle("on", editing);
         });
     }
 </script>
