@@ -324,3 +324,26 @@
     text-transform: uppercase;
     font-weight: 600;
 }
+
+.individual-review {
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.individual-review p {
+    margin-top: 8px;
+}
+
+.all-review-stars {
+    display: flex;
+    gap: 4px;
+    font-size: calc(1.5vh + 0.9vw);
+}
+
+.all-review-stars span {
+    color: #c1bfb4;
+}
+
+.all-review-stars span.selected {
+    color: #ffd041;
+}

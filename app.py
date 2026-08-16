@@ -1,4 +1,4 @@
-# My Ratings WebAppand view other comments, fix the sign up and search, sql test
+# My Ratings WebApp search, sql test
 from flask import Flask, g, render_template, request, url_for, redirect, session, flash, jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
@@ -207,7 +207,7 @@ def search():
         return redirect(url_for('individual_movie', id=results[0]['item_id']))
     if not results:
         flash(f"No results found for '{search}'", "search_error")
-    return render_template("movies.html", results=results)
+    return render_template("movies.html", movies=results)
 
 
 
@@ -225,10 +225,10 @@ def individual_movie(id):
     sql = """SELECT AVG(rating) FROM ratings WHERE item_id = ?"""
     movie_review_check = query_db(sql, (id,), one=True)
     if movie_review_check and movie_review_check[0] is not None:
-        movie_review_data = round(movie_review_check[0], 1)
+        # Rounds the integer to 1dp
+        movie_review_data = round(movie_review_check[0], 1) 
     else:
         movie_review_data = None
-
 
     #sets the user data to nothing
     user_review_data = None
@@ -244,7 +244,14 @@ def individual_movie(id):
     else:
         flash("You must be logged in to review!", "review")
 
-    return render_template("movie.html", movie=result, user_review=user_review_data, movie_rating=movie_review_data)
+    if g.user:
+        sql = "SELECT ratings.*, user.username FROM ratings JOIN user ON ratings.user_id = user.user_id WHERE item_id = ? AND ratings.user_id <> ?"
+        all_movie_reviews = query_db(sql, (id, g.user['user_id']),)
+    else:
+        sql = "SELECT ratings.*, user.username FROM ratings JOIN user ON ratings.user_id = user.user_id WHERE item_id = ?"
+        all_movie_reviews = query_db(sql, (id,),)
+     
+    return render_template("movie.html", movie=result, user_review=user_review_data, movie_rating=movie_review_data, reviews=all_movie_reviews)
 
 
 
