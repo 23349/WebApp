@@ -177,11 +177,11 @@ def api_movies():
 
     # Tuples --> dictionary
     if raw_results:
-        for x in raw_results:
+        for result in raw_results:
             converted_results.append({
-                'name': x[0], 
-                'imgURL': x[1],
-                'item_id': x[2]
+                'name': result[0], 
+                'imgURL': result[1],
+                'item_id': result[2]
             })
             
     return jsonify(converted_results)
