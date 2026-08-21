@@ -59,6 +59,10 @@
     color: var(--white);
     padding: 5px 8px;
     font-weight: 600;
+    max-width: 10ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .navbar-links::after{
