@@ -7,7 +7,8 @@ DATABASE = "database.db"
 
 # Initializer
 app = Flask(__name__)
-app.secret_key = 'FINALSPARK-HELLFLAMEIGNITION'
+app.secret_key = 'FINALSPARK-HELLFLAMEIGNITION' 
+# HELLFLAMEIGNITION is a Archangel Uriel (Demon-like Judge of Fire), Jung Heewon (Judge of Chaos) and The Living Flame (Outer God version of Uriel from regression 999) refrence from ORV btw
 
 
 
