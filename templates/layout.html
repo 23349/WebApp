@@ -51,7 +51,7 @@
                 <!-- Checks if a user is logged in -->
                 {% if g.user %}
                     <!-- If there is a user it will dislplay their username and logout option -->
-                    <span class="navbar-links">{{ g.user['username']}}</span>
+                    <span class="username">{{ g.user['username']}}</span>
                     <a class="navbar-logout" href="{{ url_for('logout') }}">
                         <span style="transition: all 0.1s ease;">LOGOUT</span>
                         <div class="crying-emoji">BYE BYE :)</div>

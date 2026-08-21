@@ -101,3 +101,27 @@
 .scrollbar:hover .scrollbar-hover{
     opacity: 1;
 }
+
+.disclamer-container{
+    margin: 135px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    background-color: var(--white);
+    padding: 26px 18px 36px;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 2px 25px rgba(0, 0, 0, 0.4);
+}
+
+.disclaimer-title{
+    margin-bottom: 5px;
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+}
+
+.disclamer-text{
+    max-width: 750px;
+}

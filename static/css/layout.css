@@ -52,10 +52,19 @@
     font-weight: 600;
 }
 
+.username{
+    position: relative;
+    font-size: var(--font2);
+    text-decoration: none;
+    color: var(--white);
+    padding: 5px 8px;
+    font-weight: 600;
+}
+
 .navbar-links::after{
     position: absolute;
     content: "";
-    background-color: var(--white);
+    background-color: #fffef3;
     width: 100%;
     height: 2px;
     transform: scaleX(0);
