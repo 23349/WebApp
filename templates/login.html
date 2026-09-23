@@ -5,6 +5,8 @@
   <!-- Login title -->
     <span style="font-size: 24px; color: #ffff; font-weight: 600;">LOGIN</span>
     <form method="POST" action="login">
+        <!-- CSRF PROTECTION! -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <!-- Username box (will keep the username in a failed attempt) -->
         <input type="text" autocomplete="off" name="username" value="{{ username if username }}" placeholder="Username" required><br>
         <!-- Password -->

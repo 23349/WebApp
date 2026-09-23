@@ -39,6 +39,8 @@
                     {% endif %}
                     
                     <form id="edit-review-form" method="post" action="{{ url_for('review') }}">
+                        <!-- CSRF PROTECTION! -->
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="movie_id" value="{{ movie['item_id'] }}">
 
                         <div class="star-rating">
@@ -59,6 +61,8 @@
             <div class="review-content">
                 <button id="dropdown-btn">REVIEW</button>
                 <form style="gap: 10px;" id="review-dropdown" method="post" action="{{url_for('review')}}">
+                    <!-- CSRF PROTECTION! -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="movie_id" value="{{movie['item_id']}}">
 
                     <!-- Allow the user to alsp leave a star rating! -->

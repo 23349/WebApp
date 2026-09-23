@@ -29,7 +29,8 @@ of Uriel from regression 999) reference from ORV, since only they
 share the stigma HELLFLAME."""
 
 csrf = CSRFProtect(app)
-# csrf protects my website by basically adding a salt to the userid session cookie
+""" csrf protects my website by basically restriciting who can submit 
+a request since the required csrf will be embedded into my page."""
 
 def get_db():
     """Return the request-scoped SQLite connection, creating it if needed."""
