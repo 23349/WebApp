@@ -26,17 +26,6 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 
-# FINALSPARK-HELLFLAMEIGNITION
-""" HELLFLAMEIGNITION is an Archangel Uriel (Demon-like Judge of Fire),
-Jung Heewon (Judge of Chaos) and The Living Flame (Outer God version
-of Uriel from regression 999) reference from ORV, since only they
-share the extremely powerful stigma HELLFLAME. 
-FINALSPARK refrences Uriels final stand against The Ancient Dream where 
-she uses her dying embers of  HELLFLAME to ignite and fight against 
-The Ancient Dream until her flame  (life) eventually burnt out and see 
-reached her plausible //end// stated by the STAR STREAM.
-This refrence is in my project becasue I'm reading ORV right and lovin' it """
-
 csrf = CSRFProtect(app)
 """ csrf protects my website by basically restriciting who can submit 
 a request since the required csrf will be embedded into my page."""

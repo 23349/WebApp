@@ -1,8 +1,11 @@
-from werkzeug.security import generate_password_hash
+""" Manual Hash py """
+
+import werkzeug.security
 
 def manual_hash():
+    """A manual hash function for admin accounts"""
     password = input("Enter the password to hash: ")
-    hashed_pw = generate_password_hash(password)
+    hashed_pw = werkzeug.security.generate_password_hash(password)
     print("")
     print(hashed_pw)
 
