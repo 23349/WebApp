@@ -11,7 +11,7 @@
     <!-- Displays every movie in db: May need to change -->
     {% for result in movies %}
     <div class="movies">
-        <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
+        <a href="{{ url_for('individual_movie', movie_id=result['item_id']) }}">
             <!-- Movie Img -->
             <img src="{{result['imgURL']}}" alt ="Movie poster for  {{result['name']}}">
             <!-- Overlay that appears when you hover on it -->

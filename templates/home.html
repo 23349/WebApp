@@ -18,7 +18,7 @@
             {% for result in results2 %}
             <div class="scrollbar">
                 <!-- Img with lik to its indivisual page -->
-                <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
+                <a href="{{ url_for('individual_movie', movie_id=result['item_id']) }}">
                     <img src="{{result['imgURL']}}" alt ="Movie poster for {{result['name']}}">
                     <div class="scrollbar-hover">
                         <span>{{result['name']}}</span>
@@ -36,7 +36,7 @@
             {% for result in results %}
             <div class="scrollbar">
                 <!-- Img with lik to its indivisual page -->
-                <a href="{{ url_for('individual_movie', id=result['item_id']) }}">
+                <a href="{{ url_for('individual_movie', movie_id=result['item_id']) }}">
                     <img src="{{result['imgURL']}}" alt ="Movie poster for  {{result['name']}}">
                     <div class="scrollbar-hover">
                         <span>{{result['name']}}</span>

@@ -1,6 +1,7 @@
 """My Ratings WebApp - search, sql test."""
 
 import sqlite3
+from functools import wraps
 
 from flask import (
     Flask,
@@ -14,6 +15,7 @@ from flask import (
     jsonify,
 )
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_wtf import CSRFProtect
 
 DATABASE = "database.db"
 
@@ -26,6 +28,8 @@ Jung Heewon (Judge of Chaos) and The Living Flame (Outer God version
 of Uriel from regression 999) reference from ORV, since only they
 share the stigma HELLFLAME."""
 
+csrf = CSRFProtect(app)
+# csrf protects my website by basically adding a salt to the userid session cookie
 
 def get_db():
     """Return the request-scoped SQLite connection, creating it if needed."""
@@ -37,7 +41,7 @@ def get_db():
 
 
 @app.teardown_appcontext
-def close_connection(exception):
+def close_connection(_exception):
     """Close the database connection at the end of the request."""
     db = getattr(g, "_database", None)
     if db is not None:
@@ -66,10 +70,21 @@ def load_logged_in_user():
 
 
 @app.errorhandler(404)
-def page_not_found(error):
-    """Render the custom 404 page."""
+def page_not_found(_error):
+    """Renders the custom 404 page."""
     return render_template("404.html"), 404
 
+def login_required(function):
+    """A decorator that require the user to be logged in before accessing a route"""
+    @wraps(function)
+    # Wraps lets me keep the function data by keeping its name instead of changing it to wrapper
+    def wrapper(*args, **kwargs):
+    # I dont really need args and kwargs since I'm only implementing this into /review
+        if g.user is None:
+            flash("You must be logged in to do that", "login")
+            return redirect(url_for("login"))
+        return function(*args, **kwargs)
+    return wrapper
 
 @app.route("/")
 def home():
@@ -110,7 +125,7 @@ def login():
 def logout():
     """Log the user out and send them back where they came from."""
     session.clear()
-    return redirect(request.referrer)
+    return redirect((request.referrer) or url_for("home"))
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -214,17 +229,17 @@ def search():
 
     # If there is only one result, redirect straight to it.
     if len(results) == 1:
-        return redirect(url_for("individual_movie", id=results[0]["item_id"]))
+        return redirect(url_for("individual_movie", movie_id=results[0]["item_id"]))
     if not results:
         flash(f"No results found for '{search_term}'", "search_error")
     return render_template("movies.html", movies=results)
 
 
-@app.route("/movies/<int:id>")
-def individual_movie(id):
+@app.route("/movies/<int:movie_id>")
+def individual_movie(movie_id):
     """Get the information for the requested movie and render its page."""
     sql = "SELECT * FROM item WHERE item_id = ?"
-    result = query_db(sql, (id,), one=True)
+    result = query_db(sql, (movie_id,), one=True)
 
     # 404 if the movie doesn't exist.
     if result is None:
@@ -232,7 +247,7 @@ def individual_movie(id):
 
     # Checks if the movie has a review.
     sql = "SELECT AVG(rating) FROM ratings WHERE item_id = ?"
-    movie_review_check = query_db(sql, (id,), one=True)
+    movie_review_check = query_db(sql, (movie_id,), one=True)
     if movie_review_check and movie_review_check[0] is not None:
         # Rounds the average to 1 decimal place.
         movie_review_data = round(movie_review_check[0], 1)
@@ -247,7 +262,7 @@ def individual_movie(id):
         sql = "SELECT * FROM ratings WHERE item_id = ? AND user_id = ?"
 
         # If they are, checks whether they've already left a review.
-        user_review_check = query_db(sql, (id, g.user["user_id"]), one=True)
+        user_review_check = query_db(sql, (movie_id, g.user["user_id"]), one=True)
         if user_review_check:
             user_review_data = user_review_check
     else:
@@ -257,12 +272,12 @@ def individual_movie(id):
         sql = """SELECT ratings.*, user.username FROM ratings
                  JOIN user ON ratings.user_id = user.user_id
                  WHERE item_id = ? AND ratings.user_id <> ?"""
-        all_movie_reviews = query_db(sql, (id, g.user["user_id"]))
+        all_movie_reviews = query_db(sql, (movie_id, g.user["user_id"]))
     else:
         sql = """SELECT ratings.*, user.username FROM ratings
                  JOIN user ON ratings.user_id = user.user_id
                  WHERE item_id = ?"""
-        all_movie_reviews = query_db(sql, (id,))
+        all_movie_reviews = query_db(sql, (movie_id,))
 
     return render_template(
         "movie.html",
@@ -274,6 +289,7 @@ def individual_movie(id):
 
 
 @app.route("/review", methods=["POST"])
+@login_required
 def review():
     """Let the user leave a review, or edit their existing one."""
     movie_id = request.form.get("movie_id")
@@ -295,7 +311,7 @@ def review():
                  VALUES (?, ?, ?, ?)"""
         query_db(sql, (review_text, g.user["user_id"], movie_id, star_review))
 
-    return redirect(url_for("individual_movie", id=movie_id))
+    return redirect(url_for("individual_movie", movie_id=movie_id))
 
 
 if __name__ == "__main__":
